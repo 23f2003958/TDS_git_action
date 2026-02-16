@@ -20,10 +20,10 @@ jobs:
           key: cache-fbf849a
 
       - name: prime-cache-fbf849a
-        run: echo "Cache hit/miss result is ${{ steps.my-cache.outputs.cache-hit }}"
+        run: echo "Cache status is ${{ steps.my-cache.outputs.cache-hit }}"
 
-      - name: Create dummy data if miss
+      - name: Create data if miss
         if: steps.my-cache.outputs.cache-hit != 'true'
         run: |
           mkdir -p ~/dummy-data
-          echo "This is some data to cache" > ~/dummy-data/data.txt
+          echo "fbf849a" > ~/dummy-data/seed.txt
