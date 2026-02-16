@@ -1,0 +1,13 @@
+name: Grader Verification Action
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 23f2003958@ds.study.iitm.ac.in
+        run: echo "Verification step for TDS project"
