@@ -6,8 +6,32 @@ on:
   workflow_dispatch:
 
 jobs:
+  # Job 1: Verification
   verify:
     runs-on: ubuntu-latest
     steps:
       - name: 23f2003958@ds.study.iitm.ac.in
         run: echo "Verification step for TDS project"
+
+  # Job 2: Cache Exercise (Runs at the same time as 'verify')
+  cache-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Cache
+        id: my-cache
+        uses: actions/cache@v4
+        with:
+          path: ~/dummy-data
+          key: cache-fbf849a
+
+      - name: prime-cache-fbf849a
+        run: echo "Cache status is ${{ steps.my-cache.outputs.cache-hit }}"
+
+      - name: Create data if miss
+        if: steps.my-cache.outputs.cache-hit != 'true'
+        run: |
+          mkdir -p ~/dummy-data
+          echo "fbf849a" > ~/dummy-data/seed.txt
