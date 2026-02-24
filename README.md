@@ -1,0 +1,1 @@
+[![Daily Repo Update](https://github.com/23f2003958/TDS_git_action/actions/workflows/daily_commit.yml/badge.svg?branch=main)](https://github.com/23f2003958/TDS_git_action/actions/workflows/daily_commit.yml)
