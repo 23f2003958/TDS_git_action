@@ -1,0 +1,30 @@
+name: DataDash QA Automation
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  build-and-run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Dependencies
+        run: |
+          npm init -y
+          npm install playwright
+
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps chromium
+
+      # Mandatory step with your email as the name
+      - name: 23f2003958@ds.study.iitm.ac.in
+        run: node scraper.js
