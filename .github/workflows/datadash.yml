@@ -6,13 +6,13 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-and-run:
+  qa-scrape:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Code
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
+      - name: Install Node
         uses: actions/setup-node@v4
         with:
           node-version: '20'
@@ -22,9 +22,9 @@ jobs:
           npm init -y
           npm install playwright
 
-      - name: Install Playwright Browsers
+      - name: Install Playwright Chromium
         run: npx playwright install --with-deps chromium
 
-      # Mandatory step with your email as the name
+      # REQUIRED: This step must print the 'Total: ' result
       - name: 23f2003958@ds.study.iitm.ac.in
         run: node scraper.js
