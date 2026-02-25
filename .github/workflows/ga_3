@@ -1,4 +1,4 @@
-name: ga_3
+name: Combined Workflow
 
 on:
   push:
@@ -8,6 +8,7 @@ on:
   workflow_dispatch:
 
 jobs:
+  # JOB 1: Aligned at the start
   commit_job:
     name: Run Daily Update
     runs-on: ubuntu-latest
@@ -25,6 +26,7 @@ jobs:
           git commit -m "Automated update" || exit 0
           git push
 
+  # JOB 2: Must be at the SAME indentation as commit_job
   scraper_job:
     name: Run Scraper
     runs-on: ubuntu-latest
@@ -37,4 +39,4 @@ jobs:
         run: |
           npm install playwright
           npx playwright install --with-deps chromium
-          node scraper.js # Ensure this prints 'Total: ' for the grader
+          node scraper.js
