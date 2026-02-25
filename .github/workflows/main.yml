@@ -1,4 +1,4 @@
-name: ga_3
+name: Combined Workflow
 
 on:
   push:
