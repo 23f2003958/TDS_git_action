@@ -1,0 +1,56 @@
+name: Combined Tasks Workflow
+
+on:
+  schedule:
+    # Requirement: 05:30 UTC daily
+    - cron: '30 5 * * *'
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  # --- TASK 1: Automated Daily Commit ---
+  automated_commit:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Update log file 23f2003958@ds.study.iitm.ac.in
+        run: |
+          echo "Last automated update: $(date)" > daily_update.txt
+
+      - name: Commit and Push changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add daily_update.txt
+          # The '|| exit 0' prevents the action from failing if there are no changes
+          git commit -m "Automated daily update: $(date)" || exit 0
+          git push
+
+  # --- TASK 2: Playwright Scraper ---
+  qa-scrape:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Dependencies
+        run: |
+          npm init -y
+          npm install playwright
+
+      - name: Install Playwright Chromium
+        run: npx playwright install --with-deps chromium
+
+      # Requirement: This step name must contain your email
+      - name: Run Scraper 23f2003958@ds.study.iitm.ac.in
+        run: node scraper.js
